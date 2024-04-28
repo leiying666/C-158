@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<Windows.h>
+#include<graphics.h>
+int num=0;
+IMAGE bgp;
+void draw_piece(int x,int y)
+{
+	if (num == 0)
+		setfillcolor(BLACK);
+	else
+		setfillcolor(WHITE);
+	int m = x / 49.6+1;
+	int n = y / 49.6+1;
+	fillcircle(48 * m, 48 * n, 20);
+	num = (num + 1) % 2;
+}
+int main()
+{
+	SetConsoleTitle("五子棋");
+	initgraph(960,960, EX_NOCLOSE);
+	loadimage(&bgp,"background4.png");
+	putimage(0,0,&bgp);
+	MOUSEMSG m;
+	while (1)
+	{
+		m = GetMouseMsg();
+		if (m.uMsg == WM_LBUTTONDOWN)
+		{
+			draw_piece(m.x,m.y);
+		}
+	}
+	return 0;
+}
